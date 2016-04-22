@@ -1,51 +1,47 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace SeleniumTesting
 {
-    public class ChromeTests : IUseFixture<ChromeFixture>
+    public class ChromeTests : IClassFixture<ChromeFixture>
     {
-        ChromeDriver driver;
+        private ChromeDriver _driver;
 
         public void SetFixture(ChromeFixture data)
         {
-            driver = data.GetDriver();
+            _driver = data.GetDriver();
         }
 
         [Fact]
         public void Google_com_should_return_search_results()
         {
-            driver.Navigate().GoToUrl("http://www.google.com/ncr");
+            _driver.Navigate().GoToUrl("http://www.google.com/ncr");
             Task.Delay(TimeSpan.FromSeconds(5)).Wait();
 
             // here you can check HTML of the page you currently have loaded in the browser
             // and save it to the file
-            File.WriteAllText("chrome-source-1.html", driver.PageSource);
+            File.WriteAllText("chrome-source-1.html", _driver.PageSource);
 
-            IWebElement query = driver.FindElement(By.Name("q"));
+            var query = _driver.FindElement(By.Name("q"));
             query.SendKeys("Selenium");
 
             var end = DateTime.Now.AddSeconds(5);
             while(DateTime.Now < end)
             {
-                var resultsDiv = driver.FindElement(By.ClassName("sbdd_b"));
+                var resultsDiv = _driver.FindElement(By.ClassName("sbdd_b"));
                 if(resultsDiv.Displayed)
                 {
                     break;
                 }
             }
 
-            var allSuggestions = driver.FindElements(By.XPath("//div[@class='sbqs_c']"));
+            var allSuggestions = _driver.FindElements(By.XPath("//div[@class='sbqs_c']"));
             foreach(var suggestion in allSuggestions)
             {
                 Console.WriteLine(suggestion.Text);
@@ -53,32 +49,32 @@ namespace SeleniumTesting
 
             query.Submit();
 
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
-            wait.Until((d) => { return d.Title.StartsWith("Selenium"); });
+            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(20));
+            wait.Until(d => d.Title.StartsWith("Selenium"));
 
-            Assert.Equal("Selenium - Google Search", driver.Title);
+            Assert.Equal("Selenium - Google Search", _driver.Title);
 
-            driver.GetScreenshot().SaveAsFile("chrome-snapshot.png", ImageFormat.Png);
+            _driver.GetScreenshot().SaveAsFile("chrome-snapshot.png", ImageFormat.Png);
         }
     }
 
     public class ChromeFixture : IDisposable
     {
-        ChromeDriver driver;
+        private readonly ChromeDriver _driver;
 
         public ChromeFixture()
         {
-            driver = new ChromeDriver();
+            _driver = new ChromeDriver();
         }
 
         public ChromeDriver GetDriver()
         {
-            return driver;
+            return _driver;
         }
 
         public void Dispose()
         {
-            driver.Quit();
+            _driver.Quit();
         }
     }
 }
