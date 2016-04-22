@@ -8,19 +8,19 @@ using Xunit;
 
 namespace SeleniumTesting.Tests.XUnitTests
 {
-    public class FirefoxTests : IClassFixture<FirefoxFixture>
+    public class FirefoxTests : FirefoxFixture, IClassFixture<FirefoxFixture>
     {
-        private FirefoxDriver _driver;
+        private readonly FirefoxDriver _driver;
 
-        public void SetFixture(FirefoxFixture data)
+        public FirefoxTests()
         {
-            _driver = data.GetDriver();
+            _driver = GetDriver();
         }
 
         [Fact]
         public void Google_com_should_return_search_results()
         {
-            _driver.Navigate().GoToUrl("http://www.google.com/ncr");
+            _driver.Navigate().GoToUrl(@"http://www.google.com/ncr");
             var query = _driver.GetElement(By.Name("q"));
             query.SendKeys("Selenium");
             query.Submit();

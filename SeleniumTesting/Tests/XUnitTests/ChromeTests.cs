@@ -10,13 +10,13 @@ using Xunit;
 
 namespace SeleniumTesting.Tests.XUnitTests
 {
-    public class ChromeTests : IClassFixture<ChromeFixture>
+    public class ChromeTests : ChromeFixture, IClassFixture<ChromeFixture>
     {
-        private ChromeDriver _driver;
+        private readonly ChromeDriver _driver;
 
-        public void SetFixture(ChromeFixture data)
+        public ChromeTests()
         {
-            _driver = data.GetDriver();
+            _driver = GetDriver();
         }
 
         [Fact]

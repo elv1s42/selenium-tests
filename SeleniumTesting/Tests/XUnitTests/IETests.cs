@@ -10,13 +10,13 @@ using Xunit;
 
 namespace SeleniumTesting.Tests.XUnitTests
 {
-    public class IETests : IClassFixture<IEFixture>
+    public class IETests : IEFixture, IClassFixture<IEFixture>
     {
-        private InternetExplorerDriver _driver;
+        private readonly InternetExplorerDriver _driver;
 
-        public void SetFixture(IEFixture data)
+        public IETests()
         {
-            _driver = data.GetDriver();
+            _driver = GetDriver();
         }
 
         [Fact]
