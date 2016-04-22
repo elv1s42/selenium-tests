@@ -8,11 +8,11 @@ using Xunit;
 
 namespace SeleniumTesting.Tests.XUnitTests
 {
-    public class FirefoxTests : FirefoxFixture, IClassFixture<FirefoxFixture>
+    public class XUnitFirefoxTests : FirefoxFixture, IClassFixture<FirefoxFixture>
     {
         private readonly FirefoxDriver _driver;
 
-        public FirefoxTests()
+        public XUnitFirefoxTests()
         {
             _driver = GetDriver();
         }
