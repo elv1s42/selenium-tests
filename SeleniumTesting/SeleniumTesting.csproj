@@ -65,9 +65,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InternetExplorerTests.cs" />
-    <Compile Include="ChromeTests.cs" />
-    <Compile Include="FireFoxTests.cs" />
+    <Compile Include="Tests\XUnitTests\TestFixtures\IEFixture.cs" />
+    <Compile Include="Tests\XUnitTests\TestFixtures\FirefoxFixture.cs" />
+    <Compile Include="Tests\XUnitTests\TestFixtures\ChromeFixture.cs" />
+    <Compile Include="Tests\XUnitTests\IETests.cs" />
+    <Compile Include="Tests\XUnitTests\ChromeTests.cs" />
+    <Compile Include="Tests\XUnitTests\FirefoxTests.cs" />
     <Compile Include="WebDriverExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

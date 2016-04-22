@@ -1,13 +1,14 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
-using System;
+﻿using System;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using SeleniumTesting.Tests.XUnitTests.TestFixtures;
 using Xunit;
 
-namespace SeleniumTesting
+namespace SeleniumTesting.Tests.XUnitTests
 {
     public class ChromeTests : IClassFixture<ChromeFixture>
     {
@@ -55,26 +56,6 @@ namespace SeleniumTesting
             Assert.Equal("Selenium - Google Search", _driver.Title);
 
             _driver.GetScreenshot().SaveAsFile("chrome-snapshot.png", ImageFormat.Png);
-        }
-    }
-
-    public class ChromeFixture : IDisposable
-    {
-        private readonly ChromeDriver _driver;
-
-        public ChromeFixture()
-        {
-            _driver = new ChromeDriver();
-        }
-
-        public ChromeDriver GetDriver()
-        {
-            return _driver;
-        }
-
-        public void Dispose()
-        {
-            _driver.Quit();
         }
     }
 }

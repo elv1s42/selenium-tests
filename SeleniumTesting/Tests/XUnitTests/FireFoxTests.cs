@@ -1,17 +1,18 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using System.Drawing.Imaging;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
-using System;
-using System.Drawing.Imaging;
+using SeleniumTesting.Tests.XUnitTests.TestFixtures;
 using Xunit;
 
-namespace SeleniumTesting
+namespace SeleniumTesting.Tests.XUnitTests
 {
-    public class FireFoxTests : IClassFixture<FireFoxFixture>
+    public class FirefoxTests : IClassFixture<FirefoxFixture>
     {
         private FirefoxDriver _driver;
 
-        public void SetFixture(FireFoxFixture data)
+        public void SetFixture(FirefoxFixture data)
         {
             _driver = data.GetDriver();
         }
@@ -29,28 +30,6 @@ namespace SeleniumTesting
             Assert.Equal("Selenium - Google Search", _driver.Title);
 
             _driver.GetScreenshot().SaveAsFile("firefox-snapshot.png", ImageFormat.Png);
-        }
-    }
-
-    public class FireFoxFixture : IDisposable
-    {
-        private readonly FirefoxDriver _driver;
-
-        public FireFoxFixture()
-        {
-            Environment.SetEnvironmentVariable("webdriver.log.file", "log-file.txt");
-            Environment.SetEnvironmentVariable("webdriver.firefox.logfile", "ff-log.txt");
-            _driver = new FirefoxDriver();
-        }
-
-        public FirefoxDriver GetDriver()
-        {
-            return _driver;
-        }
-
-        public void Dispose()
-        {
-            _driver.Quit();
         }
     }
 }
